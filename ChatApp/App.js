@@ -1,114 +1,60 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Fragment} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
+import React, { useState, useEffect } from 'react';
+import { 
+  StyleSheet, View, TextInput,  Text
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
   Colors,
-  DebugInstructions,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App = () => {
+import io  from "socket.io-client";
+const socket = io('http://10.0.3.2:3000');
+
+function App() {
+  const [ chatMessage, setChatMessage ] = useState("");
+  const [ chatMessages, setChatMessages ] = useState([]);
+
+  useEffect(() => {
+    socket.on('chat message', message => {
+      setChatMessages([...chatMessages, message]);
+    });
+  }, [chatMessages]);
+
+  function submitChatMessage() {
+    socket.emit('chat message', chatMessage);
+    setChatMessage("");
+  }
+
+  function Chat() {
+    console.log(typeof(chatMessages));
+    chatMessages.map(chatMessage => {
+      console.log(chatMessages);
+
+      <Text key={chatMessage}>{chatMessage}</Text>
+    });
+  }
+
   return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Fragment>
+    <View style={styles.container}>
+      <TextInput
+        style={{height: 40, borderWidth: 2}}
+        autoCorrect={false}
+        value={chatMessage}
+        onSubmitEditing={submitChatMessage}
+        onChangeText={chatMessage => {
+          setChatMessage(chatMessage);
+        }}
+      />
+      {Chat()}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
+  container: {
     backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+    flex: 1,
+  }
 });
 
 export default App;
