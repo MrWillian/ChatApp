@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for ChatApp Project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MrWillian/ChatApp.git"
+  },
+  "author": "Willian Marciel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrWillian/ChatApp/issues"
+  },
+  "homepage": "https://github.com/MrWillian/ChatApp#readme",
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.2",
+    "socket.io": "^2.2.0"
+  }
+}
