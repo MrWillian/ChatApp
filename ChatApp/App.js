@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  StyleSheet, View, TextInput,  Text
-} from 'react-native';
+import { StyleSheet, View, TextInput,  Text } from 'react-native';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import io  from "socket.io-client";
 const socket = io('http://10.0.3.2:3000');
