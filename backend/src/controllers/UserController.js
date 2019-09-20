@@ -16,14 +16,19 @@ module.exports = {
         return res.json(users);
     },
 
-    // async store(req, res) {
-    //     const { user } = req.body;
-    //     const userExists = await User.findOne({ name });
+    async store(req, res) {
+        const { user } = req.body;
+        const userExists = await User.findOne({ name });
 
-    //     if (userExists) {
-    //       return res.json(userExists);
-    //     }
+        console.log("req");
 
+        if (userExists) {
+          return res.json(userExists);
+        }
 
-    // }
+        const user = await User.create({
+            name,
+            user: username,
+        });
+    }
 }

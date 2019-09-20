@@ -2,11 +2,14 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
+const port = 19000;
+
 const mongoose = require('mongoose');
 const cors = require('cors');
-const port = 3000;
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0-hn3qw.mongodb.net/test?retryWrites=true&w=majority', {
+const routes = require('./routes');
+
+mongoose.connect('mongodb+srv://admin:admin@cluster0-hn3qw.mongodb.net/chat?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
 
@@ -20,5 +23,6 @@ io.on('connection', socket => {
 
 app.use(cors());
 app.use(express.json());
+app.use(routes);
 
 server.listen(port, () => console.log('connection is open on port: ' + port));
