@@ -3,24 +3,18 @@ const User = require('../models/User');
 
 module.exports = {
     async index(req, res) {
-
-        const users = await User.find({}, (err, docs) => {
-            if (!err){ 
-                console.log(docs);
-                process.exit();
+        await User.find({}, (err, docs) => {
+            if (!err){
+                return res.json(docs);
             } else {
                 throw err;
             }
         });
-
-        return res.json(users);
     },
 
     async store(req, res) {
-        const { user } = req.body;
+        const { name, email, age, cellNumber } = req.body;
         const userExists = await User.findOne({ name });
-
-        console.log("req");
 
         if (userExists) {
           return res.json(userExists);
@@ -28,7 +22,12 @@ module.exports = {
 
         const user = await User.create({
             name,
-            user: username,
+            email,
+            age,
+            avatar: null,
+            cell_number: cellNumber,
         });
-    }
+
+        return res.json(user);
+    },
 }

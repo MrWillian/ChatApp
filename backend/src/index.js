@@ -9,7 +9,7 @@ const cors = require('cors');
 
 const routes = require('./routes');
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0-hn3qw.mongodb.net/chat?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://omnistack:omnistack@cluster0-58x2s.mongodb.net/chat?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
 
