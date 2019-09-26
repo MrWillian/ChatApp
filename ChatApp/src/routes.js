@@ -14,12 +14,15 @@ const Routes = createAppContainer(
         },
         {
             tabBarOptions: {
-                activeTintColor: '#800080',
+                style: {
+                    backgroundColor: '#800090',
+                },
+                activeTintColor: '#000',
                 inactiveTintColor: '#FFF',
                 showIcon: true 
             },
         }),
-        Conversation: { screen: Conversation },   
+        Conversation: { screen: Conversation },
     },
     {
         initialRouteName: "Tabs",
